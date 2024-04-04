@@ -51,6 +51,10 @@ validate_mcgf_rs <- function(x) {
 #' @param dists List of signed distance matrices. Required when `locations` is
 #' not supplied.
 #' @param time Optional, a vector of equally spaced time stamps.
+#' @param longlat Logical, if TURE `locations` contains longitudes and
+#' latitudes.
+#' @param origin Optional; used when `longlat` is TRUE. An integer index
+#' indicating the reference location which well be used as the origin.
 #'
 #' @export
 #'
@@ -60,14 +64,15 @@ validate_mcgf_rs <- function(x) {
 #' For inputs, `data` must be in space-wide format where rows correspond to
 #' different time stamps and columns refer to spatial locations. Supply either
 #' `locations` or `dists`. `locations` is a matrix or data.frame of 2D points
-#' with first column longitude and second column latitude. Both columns must be
-#' in decimal degrees. Number of rows in `locations` must be the same as the
-#' number of columns of `data`. `dists` must be a list of signed distance
-#' matrices with names `h1`, `h2`, and `h`. If `h` is not given, it will be
-#' calculated as the Euclidean distance of `h1` and `h2`. `time` is a vector of
-#' equally spaced time stamps. If it is not supplied then `data` is assumed to
-#' be temporally equally spaced. `label` must be a vector containing regime
-#' labels, and its length must be the same as the number of rows in `x`.
+#' with first column x/longitude and second column y/latitude. By default it is
+#' treated as a matrix of Earth's coordinates in decimal degrees. Number of rows
+#' in `locations` must be the same as the number of columns of `data`. `dists`
+#' must be a list of signed distance matrices with names `h1`, `h2`, and `h`.
+#' If `h` is not given, it will be calculated as the Euclidean distance of `h1`
+#' and `h2`. `time` is a vector of equally spaced time stamps. If it is not
+#' supplied then `data` is assumed to be temporally equally spaced. `label` must
+#' be a vector containing regime labels, and its length must be the same as the
+#' number of rows in `x`.
 #'
 #' An `mcgf_rs` object extends the S3 classes `mcgf` and `data.frame`, all
 #' methods remain valid to the `data` part of the object.
@@ -81,7 +86,8 @@ validate_mcgf_rs <- function(x) {
 #' obj <- mcgf_rs(data, locations = locations, label = label)
 #' print(obj, "locations")
 #' print(obj, "label")
-mcgf_rs <- function(data, locations, dists, label, time) {
+mcgf_rs <- function(data, locations, dists, label, time, longlat = TRUE,
+                    origin = 1L) {
     if (length(unique(label)) == 1) {
         message(
             "only 1 unique class found in `label`, consider using `mcgf()`",
@@ -90,8 +96,8 @@ mcgf_rs <- function(data, locations, dists, label, time) {
     }
 
     x_mcgf <- mcgf(
-        data = data, locations = locations, dists = dists,
-        time = time
+        data = data, locations = locations, dists = dists, time = time,
+        longlat = longlat, origin = origin
     )
 
     return(validate_mcgf_rs(new_mcgf_rs(x_mcgf, label)))

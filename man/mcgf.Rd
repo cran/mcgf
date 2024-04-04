@@ -4,19 +4,26 @@
 \alias{mcgf}
 \title{Create mcgf object}
 \usage{
-mcgf(data, locations, dists, time)
+mcgf(data, locations, dists, time, longlat = TRUE, origin = 1L)
 }
 \arguments{
 \item{data}{Time series data set in space-wide format.}
 
 \item{locations}{A matrix of data.frame of 2D points, first column
-longitude, second column latitude, both in decimal degrees. Required when
-\code{dists} is not supplied.}
+x/longitude, second column y/latitude. Required when \code{dists} is not supplied.
+If longitudes and latitudes are provided, they are mapped to a 2D Euclidean.
+See \code{\link[=find_dists]{find_dists()}} for more details.}
 
-\item{dists}{List of signed distance matrices. Required when \code{locations} is
-not supplied.}
+\item{dists}{List of signed distance matrices on a 2D Euclidean Plane.
+Required when \code{locations} is not supplied.}
 
 \item{time}{Optional, a vector of equally spaced time stamps.}
+
+\item{longlat}{Logical, if TURE \code{locations} contains longitudes and
+latitudes.}
+
+\item{origin}{Optional; used when \code{longlat} is TRUE. An integer index
+indicating the reference location which well be used as the origin.}
 }
 \value{
 An S3 object of class \code{mcgf}. As it inherits and extends the
@@ -32,13 +39,13 @@ An \code{mcgf} object extends the S3 class \code{data.frame}.
 For inputs, \code{data} must be in space-wide format where rows correspond to
 different time stamps and columns refer to spatial locations. Supply either
 \code{locations} or \code{dists}. \code{locations} is a matrix or data.frame of 2D points
-with first column longitude and second column latitude. Both columns must be
-in decimal degrees. Number of rows in \code{locations} must be the same as the
-number of columns of \code{data}. \code{dists} must be a list of signed distance
-matrices with names \code{h1}, \code{h2}, and \code{h}. If \code{h} is not given, it will be
-calculated as the Euclidean distance of \code{h1} and \code{h2}. \code{time} is a vector of
-equally spaced time stamps. If it is not supplied then \code{data} is assumed to
-be temporally equally spaced.
+with first column x/longitude and second column y/latitude. By default it is
+treated as a matrix of Earth's coordinates in decimal degrees. Number of rows
+in \code{locations} must be the same as the number of columns of \code{data}. \code{dists}
+must be a list of signed distance matrices with names \code{h1}, \code{h2}, and \code{h}.
+If \code{h} is not given, it will be calculated as the Euclidean distance of \code{h1}
+and \code{h2}. \code{time} is a vector of equally spaced time stamps. If it is not
+supplied then \code{data} is assumed to be temporally equally spaced.
 
 An \code{mcgf} object extends the S3 class \code{data.frame}, all methods remain valid
 to the \code{data} part of the object.

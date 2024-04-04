@@ -7,7 +7,7 @@ object.}
 \usage{
 \method{fit_lagr}{mcgf}(
   x,
-  model = c("lagr_tri", "lagr_askey", "none"),
+  model = c("lagr_tri", "lagr_askey", "lagr_exp", "none"),
   method = c("wls", "mle"),
   optim_fn = c("nlminb", "optim", "other"),
   par_fixed = NULL,
@@ -24,7 +24,8 @@ object.}
 \item{x}{An \code{mcgf} object containing attributes \code{dists}, \code{acfs}, \code{ccfs}, and
 \code{sds}. \code{x} must have been passed to \code{add_base()} or \verb{base<-}}
 
-\item{model}{Base model, one of \code{lagr_tri}, \code{lagr_askey}, or \code{none}.
+\item{model}{Base model, one of \code{lagr_tri}, \code{lagr_askey}, \code{lagr_exp}, or
+\code{none}.
 If \code{none}, NULLs are returned.}
 
 \item{method}{Parameter estimation methods, weighted least square (\code{wls}) or
@@ -113,6 +114,7 @@ Other functions on fitting an mcgf:
 \code{\link{add_base.mcgf}()},
 \code{\link{add_lagr.mcgf}()},
 \code{\link{fit_base.mcgf}()},
-\code{\link{krige.mcgf}()}
+\code{\link{krige.mcgf}()},
+\code{\link{krige_new.mcgf}()}
 }
 \concept{functions on fitting an mcgf}

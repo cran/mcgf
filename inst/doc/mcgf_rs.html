@@ -49,7 +49,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -148,6 +148,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; }
 div.csl-bib-body { }
 div.csl-entry {
 clear: both;
+margin-bottom: 0em;
 }
 .hanging div.csl-entry {
 margin-left:2em;
@@ -412,18 +413,18 @@ simulated transition matrix and regime process is given below.</p>
 <span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>tran_mat</span>
 <span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt;            [,1]       [,2]</span></span>
 <span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co">#&gt; [1,] 0.92650859 0.07349141</span></span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt; [2,] 0.04934827 0.95065173</span></span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>regime <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, N)</span>
-<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>regime[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="cf">for</span> (n <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>(N)) {</span>
-<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>    regime[n] <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>K, <span class="dv">1</span>, <span class="at">prob =</span> tran_mat[regime[n <span class="sc">-</span> <span class="dv">1</span>], ])</span>
-<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>}</span>
-<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="fu">table</span>(regime)</span>
-<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="co">#&gt; regime</span></span>
-<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a><span class="co">#&gt;    1    2 </span></span>
-<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a><span class="co">#&gt; 1993 3007</span></span></code></pre></div>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt; [2,] 0.04934827 0.95065173</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>regime <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, N)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>regime[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="cf">for</span> (n <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>(N)) {</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>    regime[n] <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>K, <span class="dv">1</span>, <span class="at">prob =</span> tran_mat[regime[n <span class="sc">-</span> <span class="dv">1</span>], ])</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>}</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="fu">table</span>(regime)</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; regime</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt;    1    2 </span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt; 1993 3007</span></span></code></pre></div>
 </div>
 <div id="data-simulation" class="section level2">
 <h2>Data Simulation</h2>
@@ -431,100 +432,100 @@ simulated transition matrix and regime process is given below.</p>
 <h3>Locations</h3>
 <p>We generate the coordinates of 25 locations below and treat the last
 5 locations as unobserved locations.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">rnorm</span>(<span class="dv">25</span>, <span class="sc">-</span><span class="dv">110</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>y <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">rnorm</span>(<span class="dv">25</span>, <span class="dv">50</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>locations_all <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">lon =</span> x, <span class="at">lat =</span> y)</span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>locations <span class="ot">&lt;-</span> locations_all[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, ]</span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>locations_new <span class="ot">&lt;-</span> locations_all[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>), ]</span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>locations_all</span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt;             lon      lat</span></span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt;  [1,] -110.5605 48.31331</span></span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt;  [2,] -110.2302 50.83779</span></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt;  [3,] -108.4413 50.15337</span></span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt;  [4,] -109.9295 48.86186</span></span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt;  [5,] -109.8707 51.25381</span></span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt;  [6,] -108.2849 50.42646</span></span>
-<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt;  [7,] -109.5391 49.70493</span></span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt;  [8,] -111.2651 50.89513</span></span>
-<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#&gt;  [9,] -110.6869 50.87813</span></span>
-<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#&gt; [10,] -110.4457 50.82158</span></span>
-<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co">#&gt; [11,] -108.7759 50.68864</span></span>
-<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co">#&gt; [12,] -109.6402 50.55392</span></span>
-<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="co">#&gt; [13,] -109.5992 49.93809</span></span>
-<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="co">#&gt; [14,] -109.8893 49.69404</span></span>
-<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a><span class="co">#&gt; [15,] -110.5558 49.61953</span></span>
-<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a><span class="co">#&gt; [16,] -108.2131 49.30529</span></span>
-<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="co">#&gt; [17,] -109.5021 49.79208</span></span>
-<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a><span class="co">#&gt; [18,] -111.9666 48.73460</span></span>
-<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a><span class="co">#&gt; [19,] -109.2986 52.16896</span></span>
-<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a><span class="co">#&gt; [20,] -110.4728 51.20796</span></span>
-<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a><span class="co">#&gt; [21,] -111.0678 48.87689</span></span>
-<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a><span class="co">#&gt; [22,] -110.2180 49.59712</span></span>
-<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a><span class="co">#&gt; [23,] -111.0260 49.53334</span></span>
-<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a><span class="co">#&gt; [24,] -110.7289 50.77997</span></span>
-<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a><span class="co">#&gt; [25,] -110.6250 49.91663</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">rnorm</span>(<span class="dv">25</span>, <span class="sc">-</span><span class="dv">110</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>y <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">rnorm</span>(<span class="dv">25</span>, <span class="dv">50</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>locations_all <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">lon =</span> x, <span class="at">lat =</span> y)</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>locations <span class="ot">&lt;-</span> locations_all[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, ]</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>locations_new <span class="ot">&lt;-</span> locations_all[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>), ]</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>locations_all</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt;             lon      lat</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt;  [1,] -110.5605 48.31331</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt;  [2,] -110.2302 50.83779</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt;  [3,] -108.4413 50.15337</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt;  [4,] -109.9295 48.86186</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt;  [5,] -109.8707 51.25381</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt;  [6,] -108.2849 50.42646</span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt;  [7,] -109.5391 49.70493</span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt;  [8,] -111.2651 50.89513</span></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">#&gt;  [9,] -110.6869 50.87813</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="co">#&gt; [10,] -110.4457 50.82158</span></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="co">#&gt; [11,] -108.7759 50.68864</span></span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="co">#&gt; [12,] -109.6402 50.55392</span></span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="co">#&gt; [13,] -109.5992 49.93809</span></span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="co">#&gt; [14,] -109.8893 49.69404</span></span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="co">#&gt; [15,] -110.5558 49.61953</span></span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="co">#&gt; [16,] -108.2131 49.30529</span></span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="co">#&gt; [17,] -109.5021 49.79208</span></span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="co">#&gt; [18,] -111.9666 48.73460</span></span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="co">#&gt; [19,] -109.2986 52.16896</span></span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="co">#&gt; [20,] -110.4728 51.20796</span></span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="co">#&gt; [21,] -111.0678 48.87689</span></span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a><span class="co">#&gt; [22,] -110.2180 49.59712</span></span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a><span class="co">#&gt; [23,] -111.0260 49.53334</span></span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a><span class="co">#&gt; [24,] -110.7289 50.77997</span></span>
+<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a><span class="co">#&gt; [25,] -110.6250 49.91663</span></span></code></pre></div>
 </div>
 <div id="data-simulation-1" class="section level3">
 <h3>Data simulation</h3>
 <p>To simulate the 5-th order RS-MCGF process, we calculate the distance
 matrices for all locations first and then use <code>mcgf_rs_sim</code>
 to simulate such process.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># simulate RS MCGF</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>par_base <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>    <span class="at">par_s =</span> <span class="fu">list</span>(<span class="at">nugget =</span> <span class="dv">0</span>, <span class="at">c =</span> <span class="fl">0.005</span>, <span class="at">gamma =</span> <span class="fl">0.5</span>),</span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="at">par_t =</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="fl">0.5</span>, <span class="at">alpha =</span> <span class="fl">0.2</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>)</span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>par_lagr1 <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">v1 =</span> <span class="dv">100</span>, <span class="at">v2 =</span> <span class="dv">100</span>, <span class="at">k =</span> <span class="dv">2</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>par_lagr2 <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">v1 =</span> <span class="dv">50</span>, <span class="at">v2 =</span> <span class="dv">100</span>, <span class="at">k =</span> <span class="dv">2</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">find_dists_new</span>(locations, locations_new)</span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>data_all <span class="ot">&lt;-</span> <span class="fu">mcgf_rs_sim</span>(</span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>    <span class="at">N =</span> N, <span class="at">label =</span> regime,</span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>    <span class="at">base_ls =</span> <span class="fu">list</span>(<span class="st">&quot;sep&quot;</span>),</span>
-<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>    <span class="at">lagrangian_ls =</span> <span class="fu">list</span>(<span class="st">&quot;lagr_tri&quot;</span>),</span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>    <span class="at">par_base_ls =</span> <span class="fu">list</span>(par_base),</span>
-<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a>    <span class="at">par_lagr_ls =</span> <span class="fu">list</span>(par_lagr1, par_lagr2),</span>
-<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a>    <span class="at">lambda_ls =</span> <span class="fu">list</span>(<span class="fl">0.3</span>, <span class="fl">0.3</span>),</span>
-<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>    <span class="at">lag_ls =</span> <span class="fu">list</span>(lag, lag),</span>
-<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a>    <span class="at">dists_ls =</span> <span class="fu">list</span>(h, h)</span>
-<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>)</span>
-<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a>data_all <span class="ot">&lt;-</span> data_all[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>(lag <span class="sc">+</span> <span class="dv">1</span>)), ]</span>
-<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="fu">rownames</span>(data_all) <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(data_all)</span>
-<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="fu">head</span>(data_all)</span>
-<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="co">#&gt;   regime          1           2          3           4           5          6</span></span>
-<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="co">#&gt; 1      1 -0.4131534 -0.21405685  0.7229975 -0.08322733  0.07023563  1.1604699</span></span>
-<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="co">#&gt; 2      1 -1.7574429 -0.06411826  0.3964733 -1.75421279  0.80900801  0.9012895</span></span>
-<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="co">#&gt; 3      1 -0.8264216 -1.02490415 -0.4809606 -0.52653010 -0.49018553  0.4388830</span></span>
-<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="co">#&gt; 4      1  0.4089212 -0.72910670 -1.6972114 -0.01897436 -1.38506809 -1.1222586</span></span>
-<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a><span class="co">#&gt; 5      1 -0.4281591  0.03573133 -0.4868917 -0.58029926 -0.71498960 -0.5022470</span></span>
-<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a><span class="co">#&gt; 6      1 -0.9151832 -0.15757508  0.1973134 -1.31430392  0.24629283  0.9822986</span></span>
-<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a><span class="co">#&gt;            7          8           9           10         11         12</span></span>
-<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a><span class="co">#&gt; 1  0.3711177 -0.7330453 -0.63540128 -0.505026336  1.1774047  0.4296625</span></span>
-<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a><span class="co">#&gt; 2 -0.8354430 -0.2938705  0.03111661  0.085975510  1.1477487  0.4023173</span></span>
-<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a><span class="co">#&gt; 3 -1.6674136 -1.0990787 -1.00007998 -0.947069513  0.3588851 -0.8873257</span></span>
-<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a><span class="co">#&gt; 4 -0.9068406 -0.8932880 -0.58649863 -0.683863298 -0.9053647 -0.4603737</span></span>
-<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a><span class="co">#&gt; 5 -0.6486205 -0.9952912 -0.44048783 -0.006790727 -0.5014230  0.1964397</span></span>
-<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a><span class="co">#&gt; 6 -0.5239507 -0.6489432 -0.53016266 -0.683924188  1.2357249 -0.2040576</span></span>
-<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a><span class="co">#&gt;           13         14         15         16         17          18         19</span></span>
-<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a><span class="co">#&gt; 1  0.4330098  0.2688759 -0.2456852  1.1310980  0.5107434 -1.49171524  0.5461195</span></span>
-<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a><span class="co">#&gt; 2 -0.4543559 -0.9603846 -1.4064577 -0.4327531 -0.6527845 -2.36113493  2.0883711</span></span>
-<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a><span class="co">#&gt; 3 -1.4776433 -1.7967629 -1.9298573 -0.7471992 -1.4625251 -1.10579922  1.4295638</span></span>
-<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a><span class="co">#&gt; 4 -0.6764329 -0.9565217 -0.3102249 -0.1738450 -0.6722008 -0.01761965 -0.3733054</span></span>
-<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a><span class="co">#&gt; 5 -0.8742965 -0.6689574 -0.3878315  0.1411472 -0.6709104 -1.22389933 -0.7333397</span></span>
-<span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a><span class="co">#&gt; 6 -0.4211337 -0.1178140 -1.2466737  0.1826659 -0.4473040 -2.16117290 -0.1881705</span></span>
-<span id="cb3-46"><a href="#cb3-46" tabindex="-1"></a><span class="co">#&gt;            20      New_1       New_2      New_3       New_4      New_5</span></span>
-<span id="cb3-47"><a href="#cb3-47" tabindex="-1"></a><span class="co">#&gt; 1 -0.44740467 -1.1643327 -0.06426498 -1.0297345 -0.77352947 -0.5462547</span></span>
-<span id="cb3-48"><a href="#cb3-48" tabindex="-1"></a><span class="co">#&gt; 2  0.79348781 -2.5153602 -1.36237046 -2.0750023 -0.01391596 -1.2526368</span></span>
-<span id="cb3-49"><a href="#cb3-49" tabindex="-1"></a><span class="co">#&gt; 3  0.01670341 -1.5287918 -2.41782779 -1.2808399 -1.23474600 -2.2184071</span></span>
-<span id="cb3-50"><a href="#cb3-50" tabindex="-1"></a><span class="co">#&gt; 4 -0.31026289 -0.3648568 -0.20992439  0.1999604 -0.81191510 -0.8132315</span></span>
-<span id="cb3-51"><a href="#cb3-51" tabindex="-1"></a><span class="co">#&gt; 5 -0.38518119 -0.9982079 -0.59390388 -0.8748418 -0.61917135 -0.1031998</span></span>
-<span id="cb3-52"><a href="#cb3-52" tabindex="-1"></a><span class="co">#&gt; 6 -0.48971901 -1.9617002 -1.33014481 -1.4159325 -0.20824058 -1.3501761</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># simulate RS MCGF</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>par_base <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    <span class="at">par_s =</span> <span class="fu">list</span>(<span class="at">nugget =</span> <span class="dv">0</span>, <span class="at">c =</span> <span class="fl">0.005</span>, <span class="at">gamma =</span> <span class="fl">0.5</span>),</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="at">par_t =</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="fl">0.5</span>, <span class="at">alpha =</span> <span class="fl">0.2</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>)</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>par_lagr1 <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">v1 =</span> <span class="dv">100</span>, <span class="at">v2 =</span> <span class="dv">100</span>, <span class="at">k =</span> <span class="dv">2</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>par_lagr2 <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">v1 =</span> <span class="dv">50</span>, <span class="at">v2 =</span> <span class="dv">100</span>, <span class="at">k =</span> <span class="dv">2</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">find_dists_new</span>(locations, locations_new)</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>data_all <span class="ot">&lt;-</span> <span class="fu">mcgf_rs_sim</span>(</span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>    <span class="at">N =</span> N, <span class="at">label =</span> regime,</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>    <span class="at">base_ls =</span> <span class="fu">list</span>(<span class="st">&quot;sep&quot;</span>),</span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>    <span class="at">lagrangian_ls =</span> <span class="fu">list</span>(<span class="st">&quot;lagr_tri&quot;</span>),</span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a>    <span class="at">par_base_ls =</span> <span class="fu">list</span>(par_base),</span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>    <span class="at">par_lagr_ls =</span> <span class="fu">list</span>(par_lagr1, par_lagr2),</span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a>    <span class="at">lambda_ls =</span> <span class="fu">list</span>(<span class="fl">0.3</span>, <span class="fl">0.3</span>),</span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a>    <span class="at">lag_ls =</span> <span class="fu">list</span>(lag, lag),</span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a>    <span class="at">dists_ls =</span> <span class="fu">list</span>(h, h)</span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>)</span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a>data_all <span class="ot">&lt;-</span> data_all[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>(lag <span class="sc">+</span> <span class="dv">1</span>)), ]</span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="fu">rownames</span>(data_all) <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(data_all)</span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="fu">head</span>(data_all)</span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="co">#&gt;   regime          1           2          3           4           5          6</span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a><span class="co">#&gt; 1      1 -0.4131534 -0.21405685  0.7229975 -0.08322733  0.07023563  1.1604699</span></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a><span class="co">#&gt; 2      1 -1.7574429 -0.06411826  0.3964733 -1.75421279  0.80900801  0.9012895</span></span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a><span class="co">#&gt; 3      1 -0.8264216 -1.02490415 -0.4809606 -0.52653010 -0.49018553  0.4388830</span></span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a><span class="co">#&gt; 4      1  0.4089212 -0.72910670 -1.6972114 -0.01897436 -1.38506809 -1.1222586</span></span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a><span class="co">#&gt; 5      1 -0.4281591  0.03573133 -0.4868917 -0.58029926 -0.71498960 -0.5022470</span></span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a><span class="co">#&gt; 6      1 -0.9151832 -0.15757508  0.1973134 -1.31430392  0.24629283  0.9822986</span></span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a><span class="co">#&gt;            7          8           9           10         11         12</span></span>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a><span class="co">#&gt; 1  0.3711177 -0.7330453 -0.63540128 -0.505026336  1.1774047  0.4296625</span></span>
+<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a><span class="co">#&gt; 2 -0.8354430 -0.2938705  0.03111661  0.085975510  1.1477487  0.4023173</span></span>
+<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a><span class="co">#&gt; 3 -1.6674136 -1.0990787 -1.00007998 -0.947069513  0.3588851 -0.8873257</span></span>
+<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a><span class="co">#&gt; 4 -0.9068406 -0.8932880 -0.58649863 -0.683863298 -0.9053647 -0.4603737</span></span>
+<span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a><span class="co">#&gt; 5 -0.6486205 -0.9952912 -0.44048783 -0.006790727 -0.5014230  0.1964397</span></span>
+<span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a><span class="co">#&gt; 6 -0.5239507 -0.6489432 -0.53016266 -0.683924188  1.2357249 -0.2040576</span></span>
+<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a><span class="co">#&gt;           13         14         15         16         17          18         19</span></span>
+<span id="cb4-40"><a href="#cb4-40" tabindex="-1"></a><span class="co">#&gt; 1  0.4330098  0.2688759 -0.2456852  1.1310980  0.5107434 -1.49171524  0.5461195</span></span>
+<span id="cb4-41"><a href="#cb4-41" tabindex="-1"></a><span class="co">#&gt; 2 -0.4543559 -0.9603846 -1.4064577 -0.4327531 -0.6527845 -2.36113493  2.0883711</span></span>
+<span id="cb4-42"><a href="#cb4-42" tabindex="-1"></a><span class="co">#&gt; 3 -1.4776433 -1.7967629 -1.9298573 -0.7471992 -1.4625251 -1.10579922  1.4295638</span></span>
+<span id="cb4-43"><a href="#cb4-43" tabindex="-1"></a><span class="co">#&gt; 4 -0.6764329 -0.9565217 -0.3102249 -0.1738450 -0.6722008 -0.01761965 -0.3733054</span></span>
+<span id="cb4-44"><a href="#cb4-44" tabindex="-1"></a><span class="co">#&gt; 5 -0.8742965 -0.6689574 -0.3878315  0.1411472 -0.6709104 -1.22389933 -0.7333397</span></span>
+<span id="cb4-45"><a href="#cb4-45" tabindex="-1"></a><span class="co">#&gt; 6 -0.4211337 -0.1178140 -1.2466737  0.1826659 -0.4473040 -2.16117290 -0.1881705</span></span>
+<span id="cb4-46"><a href="#cb4-46" tabindex="-1"></a><span class="co">#&gt;            20      New_1       New_2      New_3       New_4      New_5</span></span>
+<span id="cb4-47"><a href="#cb4-47" tabindex="-1"></a><span class="co">#&gt; 1 -0.44740467 -1.1643327 -0.06426498 -1.0297345 -0.77352947 -0.5462547</span></span>
+<span id="cb4-48"><a href="#cb4-48" tabindex="-1"></a><span class="co">#&gt; 2  0.79348781 -2.5153602 -1.36237046 -2.0750023 -0.01391596 -1.2526368</span></span>
+<span id="cb4-49"><a href="#cb4-49" tabindex="-1"></a><span class="co">#&gt; 3  0.01670341 -1.5287918 -2.41782779 -1.2808399 -1.23474600 -2.2184071</span></span>
+<span id="cb4-50"><a href="#cb4-50" tabindex="-1"></a><span class="co">#&gt; 4 -0.31026289 -0.3648568 -0.20992439  0.1999604 -0.81191510 -0.8132315</span></span>
+<span id="cb4-51"><a href="#cb4-51" tabindex="-1"></a><span class="co">#&gt; 5 -0.38518119 -0.9982079 -0.59390388 -0.8748418 -0.61917135 -0.1031998</span></span>
+<span id="cb4-52"><a href="#cb4-52" tabindex="-1"></a><span class="co">#&gt; 6 -0.48971901 -1.9617002 -1.33014481 -1.4159325 -0.20824058 -1.3501761</span></span></code></pre></div>
 <p>We will holdout the new locations for parameter estimation.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>data_old <span class="ot">&lt;-</span> data_all[, <span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>]</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>data_new <span class="ot">&lt;-</span> data_all[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>data_old <span class="ot">&lt;-</span> data_all[, <span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>]</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>data_new <span class="ot">&lt;-</span> data_all[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>)]</span></code></pre></div>
 </div>
 </div>
 <div id="fitting-covariance-models" class="section level2">
@@ -533,202 +534,202 @@ to simulate such process.</p>
 symmetric model, and finally the general stationary model. First, we
 will create an <code>mcgf_rs</code> object and calculate auto- and
 cross- correlations.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>data_mcgf <span class="ot">&lt;-</span> <span class="fu">mcgf_rs</span>(data_old[, <span class="sc">-</span><span class="dv">1</span>],</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>    <span class="at">locations =</span> locations, <span class="at">longlat =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>    <span class="at">label =</span> data_old[, <span class="dv">1</span>]</span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>)</span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; `time` is not provided, assuming rows are equally spaced temporally.</span></span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>data_mcgf <span class="ot">&lt;-</span> <span class="fu">add_acfs</span>(data_mcgf, <span class="at">lag_max =</span> lag)</span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>data_mcgf <span class="ot">&lt;-</span> <span class="fu">add_ccfs</span>(data_mcgf, <span class="at">lag_max =</span> lag)</span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co"># If multiple cores are available</span></span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co"># data_mcgf &lt;- add_ccfs(data_mcgf, lag_max = lag, ncores = 8)</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>data_mcgf <span class="ot">&lt;-</span> <span class="fu">mcgf_rs</span>(data_old[, <span class="sc">-</span><span class="dv">1</span>],</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>    <span class="at">locations =</span> locations, <span class="at">longlat =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>    <span class="at">label =</span> data_old[, <span class="dv">1</span>]</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>)</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt; `time` is not provided, assuming rows are equally spaced temporally.</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>data_mcgf <span class="ot">&lt;-</span> <span class="fu">add_acfs</span>(data_mcgf, <span class="at">lag_max =</span> lag)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>data_mcgf <span class="ot">&lt;-</span> <span class="fu">add_ccfs</span>(data_mcgf, <span class="at">lag_max =</span> lag)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co"># If multiple cores are available</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co"># data_mcgf &lt;- add_ccfs(data_mcgf, lag_max = lag, ncores = 8)</span></span></code></pre></div>
 <p>Here <code>acfs</code> actually refers to the mean auto-correlations
 across the stations for each time lag. To view the calculated
 <code>acfs</code>, we can run:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">acfs</span>(data_mcgf)</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt; $acfs</span></span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt;      lag0      lag1      lag2      lag3      lag4      lag5 </span></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt; 1.0000000 0.6075506 0.4076272 0.3805953 0.3702800 0.3586723 </span></span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt; $acfs_rs</span></span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt; $acfs_rs$`Regime 1`</span></span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt;      lag0      lag1      lag2      lag3      lag4      lag5 </span></span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt; 1.0000000 0.5953378 0.3991894 0.3814418 0.3714696 0.3639292 </span></span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt; $acfs_rs$`Regime 2`</span></span>
-<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt;      lag0      lag1      lag2      lag3      lag4      lag5 </span></span>
-<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt; 1.0000000 0.6149751 0.4125410 0.3797082 0.3691936 0.3550066</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">acfs</span>(data_mcgf)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt; $acfs</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co">#&gt;      lag0      lag1      lag2      lag3      lag4      lag5 </span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co">#&gt; 1.0000000 0.6075506 0.4076272 0.3805953 0.3702800 0.3586723 </span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt; $acfs_rs</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; $acfs_rs$`Regime 1`</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt;      lag0      lag1      lag2      lag3      lag4      lag5 </span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt; 1.0000000 0.5953378 0.3991894 0.3814418 0.3714696 0.3639292 </span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co">#&gt; $acfs_rs$`Regime 2`</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co">#&gt;      lag0      lag1      lag2      lag3      lag4      lag5 </span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="co">#&gt; 1.0000000 0.6149751 0.4125410 0.3797082 0.3691936 0.3550066</span></span></code></pre></div>
 <p>Similarly, we can view the <code>ccfs</code> by the <code>ccfs</code>
 function. Here we will present lag 1 regime-switching ccfs for the first
 6 locations for the two regimes.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># Regime 1</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="fu">ccfs</span>(data_mcgf)<span class="sc">$</span>ccfs_rs<span class="sc">$</span><span class="st">`</span><span class="at">Regime 1</span><span class="st">`</span>[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">2</span>]</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt;           1         2          3         4         5          6</span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; 1 0.6047946 0.1236369 0.05451172 0.3713023 0.1363766 0.07120106</span></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt; 2 0.3027375 0.6174314 0.25427725 0.4220703 0.4477891 0.23134358</span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt; 3 0.2293202 0.3347340 0.58222643 0.3837498 0.2952973 0.46537082</span></span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt; 4 0.5256692 0.1564803 0.12938351 0.6003370 0.1701296 0.11145141</span></span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt; 5 0.2602507 0.5444454 0.32282783 0.3751226 0.6132754 0.30494395</span></span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt; 6 0.1959693 0.3710529 0.53421219 0.3193299 0.3348082 0.56379838</span></span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co"># Regime 2</span></span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="fu">ccfs</span>(data_mcgf)<span class="sc">$</span>ccfs_rs<span class="sc">$</span><span class="st">`</span><span class="at">Regime 2</span><span class="st">`</span>[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">2</span>]</span>
-<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt;           1         2         3         4         5         6</span></span>
-<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt; 1 0.6172964 0.1575309 0.1723283 0.3893590 0.1096808 0.1688383</span></span>
-<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt; 2 0.2620954 0.6289374 0.3280881 0.3878912 0.4234188 0.3004865</span></span>
-<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="co">#&gt; 3 0.2811509 0.3158273 0.6163612 0.4355238 0.2379046 0.4932367</span></span>
-<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co">#&gt; 4 0.5759686 0.1825519 0.2120796 0.6293679 0.1514506 0.1733759</span></span>
-<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="co">#&gt; 5 0.1509059 0.5799483 0.4202242 0.2930347 0.6249524 0.4089683</span></span>
-<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="co">#&gt; 6 0.2351466 0.3713949 0.5875119 0.3502719 0.3122138 0.6069874</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># Regime 1</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="fu">ccfs</span>(data_mcgf)<span class="sc">$</span>ccfs_rs<span class="sc">$</span><span class="st">`</span><span class="at">Regime 1</span><span class="st">`</span>[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">2</span>]</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="co">#&gt;           1         2          3         4         5          6</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co">#&gt; 1 0.6047946 0.1236369 0.05451172 0.3713023 0.1363766 0.07120106</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co">#&gt; 2 0.3027375 0.6174314 0.25427725 0.4220703 0.4477891 0.23134358</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt; 3 0.2293202 0.3347340 0.58222643 0.3837498 0.2952973 0.46537082</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt; 4 0.5256692 0.1564803 0.12938351 0.6003370 0.1701296 0.11145141</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt; 5 0.2602507 0.5444454 0.32282783 0.3751226 0.6132754 0.30494395</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt; 6 0.1959693 0.3710529 0.53421219 0.3193299 0.3348082 0.56379838</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co"># Regime 2</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="fu">ccfs</span>(data_mcgf)<span class="sc">$</span>ccfs_rs<span class="sc">$</span><span class="st">`</span><span class="at">Regime 2</span><span class="st">`</span>[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">2</span>]</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co">#&gt;           1         2         3         4         5         6</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co">#&gt; 1 0.6172964 0.1575309 0.1723283 0.3893590 0.1096808 0.1688383</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#&gt; 2 0.2620954 0.6289374 0.3280881 0.3878912 0.4234188 0.3004865</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt; 3 0.2811509 0.3158273 0.6163612 0.4355238 0.2379046 0.4932367</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt; 4 0.5759686 0.1825519 0.2120796 0.6293679 0.1514506 0.1733759</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt; 5 0.1509059 0.5799483 0.4202242 0.2930347 0.6249524 0.4089683</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt; 6 0.2351466 0.3713949 0.5875119 0.3502719 0.3122138 0.6069874</span></span></code></pre></div>
 <div id="pure-spatial-model" class="section level3">
 <h3>Pure Spatial Model</h3>
 <p>The pure spatial model can be fitted using the <code>fit_base</code>
 function. The results are actually obtained from the optimization
 function <code>nlminb</code>. Since the base model is the same for the
 two regimes, we set <code>rs = FALSE</code> to indicate this.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>fit_spatial <span class="ot">&lt;-</span> <span class="fu">fit_base</span>(</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>    data_mcgf,</span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>    <span class="at">model_ls =</span> <span class="st">&quot;spatial&quot;</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>    <span class="at">lag_ls =</span> lag,</span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>    <span class="at">par_init_ls =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="at">c =</span> <span class="fl">0.000001</span>, <span class="at">gamma =</span> <span class="fl">0.5</span>)),</span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>    <span class="at">par_fixed_ls =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="at">nugget =</span> <span class="dv">0</span>)),</span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>    <span class="at">rs =</span> <span class="cn">FALSE</span></span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>)</span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>fit_spatial[[<span class="dv">1</span>]]<span class="sc">$</span>fit</span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt; $par</span></span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co">#&gt;          c      gamma </span></span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co">#&gt; 0.00390725 0.50000000 </span></span>
-<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="co">#&gt; $objective</span></span>
-<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="co">#&gt; [1] 13.20815</span></span>
-<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="co">#&gt; $convergence</span></span>
-<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
-<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a><span class="co">#&gt; $iterations</span></span>
-<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a><span class="co">#&gt; [1] 2</span></span>
-<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a><span class="co">#&gt; $evaluations</span></span>
-<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a><span class="co">#&gt; function gradient </span></span>
-<span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a><span class="co">#&gt;       11        7 </span></span>
-<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb8-27"><a href="#cb8-27" tabindex="-1"></a><span class="co">#&gt; $message</span></span>
-<span id="cb8-28"><a href="#cb8-28" tabindex="-1"></a><span class="co">#&gt; [1] &quot;both X-convergence and relative convergence (5)&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>fit_spatial <span class="ot">&lt;-</span> <span class="fu">fit_base</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>    data_mcgf,</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>    <span class="at">model_ls =</span> <span class="st">&quot;spatial&quot;</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>    <span class="at">lag_ls =</span> lag,</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>    <span class="at">par_init_ls =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="at">c =</span> <span class="fl">0.000001</span>, <span class="at">gamma =</span> <span class="fl">0.5</span>)),</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>    <span class="at">par_fixed_ls =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="at">nugget =</span> <span class="dv">0</span>)),</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>    <span class="at">rs =</span> <span class="cn">FALSE</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>)</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>fit_spatial[[<span class="dv">1</span>]]<span class="sc">$</span>fit</span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="co">#&gt; $par</span></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="co">#&gt;          c      gamma </span></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a><span class="co">#&gt; 0.00390725 0.50000000 </span></span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a><span class="co">#&gt; $objective</span></span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a><span class="co">#&gt; [1] 13.20815</span></span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a><span class="co">#&gt; $convergence</span></span>
+<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a><span class="co">#&gt; $iterations</span></span>
+<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a><span class="co">#&gt; [1] 2</span></span>
+<span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a><span class="co">#&gt; $evaluations</span></span>
+<span id="cb11-24"><a href="#cb11-24" tabindex="-1"></a><span class="co">#&gt; function gradient </span></span>
+<span id="cb11-25"><a href="#cb11-25" tabindex="-1"></a><span class="co">#&gt;       11        7 </span></span>
+<span id="cb11-26"><a href="#cb11-26" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb11-27"><a href="#cb11-27" tabindex="-1"></a><span class="co">#&gt; $message</span></span>
+<span id="cb11-28"><a href="#cb11-28" tabindex="-1"></a><span class="co">#&gt; [1] &quot;both X-convergence and relative convergence (5)&quot;</span></span></code></pre></div>
 </div>
 <div id="pure-temporal-model" class="section level3">
 <h3>Pure Temporal Model</h3>
 <p>The pure temporal can also be fitted by <code>fit_base</code>:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>fit_temporal <span class="ot">&lt;-</span> <span class="fu">fit_base</span>(</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>    data_mcgf,</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>    <span class="at">model =</span> <span class="st">&quot;temporal&quot;</span>,</span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>    <span class="at">lag_ls =</span> lag,</span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>    <span class="at">par_init_ls =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)),</span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>    <span class="at">rs =</span> <span class="cn">FALSE</span></span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>)</span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>fit_temporal[[<span class="dv">1</span>]]<span class="sc">$</span>fit</span>
-<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt; $par</span></span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt;         a     alpha </span></span>
-<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt; 0.7137588 0.3484975 </span></span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="co">#&gt; $objective</span></span>
-<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="co">#&gt; [1] 0.0202941</span></span>
-<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="co">#&gt; $convergence</span></span>
-<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
-<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="co">#&gt; $iterations</span></span>
-<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a><span class="co">#&gt; [1] 9</span></span>
-<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a><span class="co">#&gt; $evaluations</span></span>
-<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a><span class="co">#&gt; function gradient </span></span>
-<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a><span class="co">#&gt;       11       26 </span></span>
-<span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb9-26"><a href="#cb9-26" tabindex="-1"></a><span class="co">#&gt; $message</span></span>
-<span id="cb9-27"><a href="#cb9-27" tabindex="-1"></a><span class="co">#&gt; [1] &quot;relative convergence (4)&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>fit_temporal <span class="ot">&lt;-</span> <span class="fu">fit_base</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>    data_mcgf,</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>    <span class="at">model =</span> <span class="st">&quot;temporal&quot;</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>    <span class="at">lag_ls =</span> lag,</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>    <span class="at">par_init_ls =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)),</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>    <span class="at">rs =</span> <span class="cn">FALSE</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>)</span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>fit_temporal[[<span class="dv">1</span>]]<span class="sc">$</span>fit</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co">#&gt; $par</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co">#&gt;         a     alpha </span></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a><span class="co">#&gt; 0.7137588 0.3484975 </span></span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a><span class="co">#&gt; $objective</span></span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a><span class="co">#&gt; [1] 0.0202941</span></span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a><span class="co">#&gt; $convergence</span></span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb12-19"><a href="#cb12-19" tabindex="-1"></a><span class="co">#&gt; $iterations</span></span>
+<span id="cb12-20"><a href="#cb12-20" tabindex="-1"></a><span class="co">#&gt; [1] 9</span></span>
+<span id="cb12-21"><a href="#cb12-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb12-22"><a href="#cb12-22" tabindex="-1"></a><span class="co">#&gt; $evaluations</span></span>
+<span id="cb12-23"><a href="#cb12-23" tabindex="-1"></a><span class="co">#&gt; function gradient </span></span>
+<span id="cb12-24"><a href="#cb12-24" tabindex="-1"></a><span class="co">#&gt;       11       26 </span></span>
+<span id="cb12-25"><a href="#cb12-25" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb12-26"><a href="#cb12-26" tabindex="-1"></a><span class="co">#&gt; $message</span></span>
+<span id="cb12-27"><a href="#cb12-27" tabindex="-1"></a><span class="co">#&gt; [1] &quot;relative convergence (4)&quot;</span></span></code></pre></div>
 <p>We can store the fitted spatial and temporal models to
 <code>data_mcgf</code> using <code>add_base</code>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>data_mcgf <span class="ot">&lt;-</span> <span class="fu">add_base</span>(data_mcgf,</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>    <span class="at">fit_s =</span> fit_spatial,</span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>    <span class="at">fit_t =</span> fit_temporal,</span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>    <span class="at">sep =</span> T</span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>data_mcgf <span class="ot">&lt;-</span> <span class="fu">add_base</span>(data_mcgf,</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>    <span class="at">fit_s =</span> fit_spatial,</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>    <span class="at">fit_t =</span> fit_temporal,</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>    <span class="at">sep =</span> T</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 <div id="separable-model" class="section level3">
 <h3>Separable Model</h3>
 <p>We can also calculate the WLS estimates all at once by fitting the
 separable model:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>fit_sep <span class="ot">&lt;-</span> <span class="fu">fit_base</span>(</span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>    data_mcgf,</span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>    <span class="at">model_ls =</span> <span class="st">&quot;sep&quot;</span>,</span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>    <span class="at">lag_ls =</span> lag,</span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>    <span class="at">par_init_ls =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="at">c =</span> <span class="fl">0.000001</span>, <span class="at">gamma =</span> <span class="fl">0.5</span>, <span class="at">a =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)),</span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>    <span class="at">par_fixed_ls =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="at">nugget =</span> <span class="dv">0</span>)),</span>
-<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">iter.max =</span> <span class="dv">10000</span>, <span class="at">eval.max =</span> <span class="dv">10000</span>)),</span>
-<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>    <span class="at">rs =</span> <span class="cn">FALSE</span></span>
-<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>)</span>
-<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>fit_sep[[<span class="dv">1</span>]]<span class="sc">$</span>fit</span>
-<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="co">#&gt; $par</span></span>
-<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a><span class="co">#&gt;          c      gamma          a      alpha </span></span>
-<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a><span class="co">#&gt; 0.00390725 0.50000000 0.72365072 0.39736171 </span></span>
-<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a><span class="co">#&gt; $objective</span></span>
-<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a><span class="co">#&gt; [1] 29.16779</span></span>
-<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a><span class="co">#&gt; $convergence</span></span>
-<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
-<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a><span class="co">#&gt; $iterations</span></span>
-<span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a><span class="co">#&gt; [1] 11</span></span>
-<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb11-24"><a href="#cb11-24" tabindex="-1"></a><span class="co">#&gt; $evaluations</span></span>
-<span id="cb11-25"><a href="#cb11-25" tabindex="-1"></a><span class="co">#&gt; function gradient </span></span>
-<span id="cb11-26"><a href="#cb11-26" tabindex="-1"></a><span class="co">#&gt;       27       64 </span></span>
-<span id="cb11-27"><a href="#cb11-27" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb11-28"><a href="#cb11-28" tabindex="-1"></a><span class="co">#&gt; $message</span></span>
-<span id="cb11-29"><a href="#cb11-29" tabindex="-1"></a><span class="co">#&gt; [1] &quot;relative convergence (4)&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>fit_sep <span class="ot">&lt;-</span> <span class="fu">fit_base</span>(</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>    data_mcgf,</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>    <span class="at">model_ls =</span> <span class="st">&quot;sep&quot;</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>    <span class="at">lag_ls =</span> lag,</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>    <span class="at">par_init_ls =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="at">c =</span> <span class="fl">0.000001</span>, <span class="at">gamma =</span> <span class="fl">0.5</span>, <span class="at">a =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)),</span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>    <span class="at">par_fixed_ls =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="at">nugget =</span> <span class="dv">0</span>)),</span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">iter.max =</span> <span class="dv">10000</span>, <span class="at">eval.max =</span> <span class="dv">10000</span>)),</span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>    <span class="at">rs =</span> <span class="cn">FALSE</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>)</span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a>fit_sep[[<span class="dv">1</span>]]<span class="sc">$</span>fit</span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="co">#&gt; $par</span></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="co">#&gt;          c      gamma          a      alpha </span></span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="co">#&gt; 0.00390725 0.50000000 0.72365072 0.39736171 </span></span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="co">#&gt; $objective</span></span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a><span class="co">#&gt; [1] 29.16779</span></span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a><span class="co">#&gt; $convergence</span></span>
+<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a><span class="co">#&gt; $iterations</span></span>
+<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a><span class="co">#&gt; [1] 11</span></span>
+<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a><span class="co">#&gt; $evaluations</span></span>
+<span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a><span class="co">#&gt; function gradient </span></span>
+<span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a><span class="co">#&gt;       27       64 </span></span>
+<span id="cb14-27"><a href="#cb14-27" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-28"><a href="#cb14-28" tabindex="-1"></a><span class="co">#&gt; $message</span></span>
+<span id="cb14-29"><a href="#cb14-29" tabindex="-1"></a><span class="co">#&gt; [1] &quot;relative convergence (4)&quot;</span></span></code></pre></div>
 <p>store the fully symmetric model as the base model and print the base
 model:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>data_mcgf <span class="ot">&lt;-</span> <span class="fu">add_base</span>(data_mcgf, <span class="at">fit_base =</span> fit_sep, <span class="at">old =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">model</span>(data_mcgf, <span class="at">model =</span> <span class="st">&quot;base&quot;</span>, <span class="at">old =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="co">#&gt;                  Model</span></span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
-<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co">#&gt; - Time lag: 5 </span></span>
-<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co">#&gt; - Scale of time lag: 1 </span></span>
-<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co">#&gt; - Forecast horizon: 1 </span></span>
-<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
-<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co">#&gt;             Old - not in use</span></span>
-<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
-<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a><span class="co">#&gt; - Regime switching: FALSE</span></span>
-<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a><span class="co">#&gt; - Base model: sep </span></span>
-<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a><span class="co">#&gt; - Parameters:</span></span>
-<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a><span class="co">#&gt;          c      gamma     nugget          a      alpha </span></span>
-<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a><span class="co">#&gt; 0.00390725 0.50000000 0.00000000 0.71375884 0.34849745 </span></span>
-<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a><span class="co">#&gt; - Fixed parameters:</span></span>
-<span id="cb12-19"><a href="#cb12-19" tabindex="-1"></a><span class="co">#&gt; nugget </span></span>
-<span id="cb12-20"><a href="#cb12-20" tabindex="-1"></a><span class="co">#&gt;      0 </span></span>
-<span id="cb12-21"><a href="#cb12-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb12-22"><a href="#cb12-22" tabindex="-1"></a><span class="co">#&gt; - Parameter estimation method: wls wls </span></span>
-<span id="cb12-23"><a href="#cb12-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb12-24"><a href="#cb12-24" tabindex="-1"></a><span class="co">#&gt; - Optimization function: nlminb nlminb </span></span>
-<span id="cb12-25"><a href="#cb12-25" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
-<span id="cb12-26"><a href="#cb12-26" tabindex="-1"></a><span class="co">#&gt;                  Base</span></span>
-<span id="cb12-27"><a href="#cb12-27" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
-<span id="cb12-28"><a href="#cb12-28" tabindex="-1"></a><span class="co">#&gt; - Regime switching: FALSE</span></span>
-<span id="cb12-29"><a href="#cb12-29" tabindex="-1"></a><span class="co">#&gt; - Base model: sep </span></span>
-<span id="cb12-30"><a href="#cb12-30" tabindex="-1"></a><span class="co">#&gt; - Parameters:</span></span>
-<span id="cb12-31"><a href="#cb12-31" tabindex="-1"></a><span class="co">#&gt;          c      gamma          a      alpha     nugget </span></span>
-<span id="cb12-32"><a href="#cb12-32" tabindex="-1"></a><span class="co">#&gt; 0.00390725 0.50000000 0.72365072 0.39736171 0.00000000 </span></span>
-<span id="cb12-33"><a href="#cb12-33" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb12-34"><a href="#cb12-34" tabindex="-1"></a><span class="co">#&gt; - Fixed parameters:</span></span>
-<span id="cb12-35"><a href="#cb12-35" tabindex="-1"></a><span class="co">#&gt; nugget </span></span>
-<span id="cb12-36"><a href="#cb12-36" tabindex="-1"></a><span class="co">#&gt;      0 </span></span>
-<span id="cb12-37"><a href="#cb12-37" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb12-38"><a href="#cb12-38" tabindex="-1"></a><span class="co">#&gt; - Parameter estimation method: wls </span></span>
-<span id="cb12-39"><a href="#cb12-39" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb12-40"><a href="#cb12-40" tabindex="-1"></a><span class="co">#&gt; - Optimization function: nlminb</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>data_mcgf <span class="ot">&lt;-</span> <span class="fu">add_base</span>(data_mcgf, <span class="at">fit_base =</span> fit_sep, <span class="at">old =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="fu">model</span>(data_mcgf, <span class="at">model =</span> <span class="st">&quot;base&quot;</span>, <span class="at">old =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co">#&gt;                  Model</span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="co">#&gt; - Time lag: 5 </span></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co">#&gt; - Scale of time lag: 1 </span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="co">#&gt; - Forecast horizon: 1 </span></span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co">#&gt;             Old - not in use</span></span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a><span class="co">#&gt; - Regime switching: FALSE</span></span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="co">#&gt; - Base model: sep </span></span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a><span class="co">#&gt; - Parameters:</span></span>
+<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a><span class="co">#&gt;          c      gamma     nugget          a      alpha </span></span>
+<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a><span class="co">#&gt; 0.00390725 0.50000000 0.00000000 0.71375884 0.34849745 </span></span>
+<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-18"><a href="#cb15-18" tabindex="-1"></a><span class="co">#&gt; - Fixed parameters:</span></span>
+<span id="cb15-19"><a href="#cb15-19" tabindex="-1"></a><span class="co">#&gt; nugget </span></span>
+<span id="cb15-20"><a href="#cb15-20" tabindex="-1"></a><span class="co">#&gt;      0 </span></span>
+<span id="cb15-21"><a href="#cb15-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-22"><a href="#cb15-22" tabindex="-1"></a><span class="co">#&gt; - Parameter estimation method: wls wls </span></span>
+<span id="cb15-23"><a href="#cb15-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-24"><a href="#cb15-24" tabindex="-1"></a><span class="co">#&gt; - Optimization function: nlminb nlminb </span></span>
+<span id="cb15-25"><a href="#cb15-25" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
+<span id="cb15-26"><a href="#cb15-26" tabindex="-1"></a><span class="co">#&gt;                  Base</span></span>
+<span id="cb15-27"><a href="#cb15-27" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
+<span id="cb15-28"><a href="#cb15-28" tabindex="-1"></a><span class="co">#&gt; - Regime switching: FALSE</span></span>
+<span id="cb15-29"><a href="#cb15-29" tabindex="-1"></a><span class="co">#&gt; - Base model: sep </span></span>
+<span id="cb15-30"><a href="#cb15-30" tabindex="-1"></a><span class="co">#&gt; - Parameters:</span></span>
+<span id="cb15-31"><a href="#cb15-31" tabindex="-1"></a><span class="co">#&gt;          c      gamma          a      alpha     nugget </span></span>
+<span id="cb15-32"><a href="#cb15-32" tabindex="-1"></a><span class="co">#&gt; 0.00390725 0.50000000 0.72365072 0.39736171 0.00000000 </span></span>
+<span id="cb15-33"><a href="#cb15-33" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-34"><a href="#cb15-34" tabindex="-1"></a><span class="co">#&gt; - Fixed parameters:</span></span>
+<span id="cb15-35"><a href="#cb15-35" tabindex="-1"></a><span class="co">#&gt; nugget </span></span>
+<span id="cb15-36"><a href="#cb15-36" tabindex="-1"></a><span class="co">#&gt;      0 </span></span>
+<span id="cb15-37"><a href="#cb15-37" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-38"><a href="#cb15-38" tabindex="-1"></a><span class="co">#&gt; - Parameter estimation method: wls </span></span>
+<span id="cb15-39"><a href="#cb15-39" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-40"><a href="#cb15-40" tabindex="-1"></a><span class="co">#&gt; - Optimization function: nlminb</span></span></code></pre></div>
 <p>The <code>old = TRUE</code> in <code>add_base</code> keeps the fitted
 pure spatial and temporal models for records, and they are not used for
 any further steps. It is recommended to keep the old model not only for
@@ -738,127 +739,127 @@ reproducibility, but to keep a history of fitted models.</p>
 <h3>Lagrangian Model</h3>
 <p>We will fit Lagrangian correlation functions to model the
 regime-dependent prevailing winds:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>fit_lagr_rs <span class="ot">&lt;-</span> <span class="fu">fit_lagr</span>(data_mcgf,</span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>    <span class="at">model_ls =</span> <span class="fu">list</span>(<span class="st">&quot;lagr_tri&quot;</span>),</span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>    <span class="at">par_init_ls =</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">lambda =</span> <span class="fl">0.1</span>, <span class="at">v1 =</span> <span class="dv">100</span>, <span class="at">v2 =</span> <span class="dv">100</span>, <span class="at">k =</span> <span class="dv">2</span>))</span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>)</span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="fu">lapply</span>(fit_lagr_rs[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="cf">function</span>(x) x<span class="sc">$</span>fit)</span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="co">#&gt; $`Regime 1`</span></span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="co">#&gt; $`Regime 1`$par</span></span>
-<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="co">#&gt;     lambda         v1         v2          k </span></span>
-<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="co">#&gt;  0.1703142 74.4859663 65.8446145  1.3401565 </span></span>
-<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co">#&gt; $`Regime 1`$objective</span></span>
-<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="co">#&gt; [1] 12.76542</span></span>
-<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a><span class="co">#&gt; $`Regime 1`$convergence</span></span>
-<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
-<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="co">#&gt; $`Regime 1`$iterations</span></span>
-<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a><span class="co">#&gt; [1] 31</span></span>
-<span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a><span class="co">#&gt; $`Regime 1`$evaluations</span></span>
-<span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a><span class="co">#&gt; function gradient </span></span>
-<span id="cb13-22"><a href="#cb13-22" tabindex="-1"></a><span class="co">#&gt;       38      147 </span></span>
-<span id="cb13-23"><a href="#cb13-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-24"><a href="#cb13-24" tabindex="-1"></a><span class="co">#&gt; $`Regime 1`$message</span></span>
-<span id="cb13-25"><a href="#cb13-25" tabindex="-1"></a><span class="co">#&gt; [1] &quot;relative convergence (4)&quot;</span></span>
-<span id="cb13-26"><a href="#cb13-26" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-27"><a href="#cb13-27" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-28"><a href="#cb13-28" tabindex="-1"></a><span class="co">#&gt; $`Regime 2`</span></span>
-<span id="cb13-29"><a href="#cb13-29" tabindex="-1"></a><span class="co">#&gt; $`Regime 2`$par</span></span>
-<span id="cb13-30"><a href="#cb13-30" tabindex="-1"></a><span class="co">#&gt;     lambda         v1         v2          k </span></span>
-<span id="cb13-31"><a href="#cb13-31" tabindex="-1"></a><span class="co">#&gt;  0.2167212 43.9009789 78.2938281  1.7852123 </span></span>
-<span id="cb13-32"><a href="#cb13-32" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-33"><a href="#cb13-33" tabindex="-1"></a><span class="co">#&gt; $`Regime 2`$objective</span></span>
-<span id="cb13-34"><a href="#cb13-34" tabindex="-1"></a><span class="co">#&gt; [1] 15.68579</span></span>
-<span id="cb13-35"><a href="#cb13-35" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-36"><a href="#cb13-36" tabindex="-1"></a><span class="co">#&gt; $`Regime 2`$convergence</span></span>
-<span id="cb13-37"><a href="#cb13-37" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
-<span id="cb13-38"><a href="#cb13-38" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-39"><a href="#cb13-39" tabindex="-1"></a><span class="co">#&gt; $`Regime 2`$iterations</span></span>
-<span id="cb13-40"><a href="#cb13-40" tabindex="-1"></a><span class="co">#&gt; [1] 27</span></span>
-<span id="cb13-41"><a href="#cb13-41" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-42"><a href="#cb13-42" tabindex="-1"></a><span class="co">#&gt; $`Regime 2`$evaluations</span></span>
-<span id="cb13-43"><a href="#cb13-43" tabindex="-1"></a><span class="co">#&gt; function gradient </span></span>
-<span id="cb13-44"><a href="#cb13-44" tabindex="-1"></a><span class="co">#&gt;       35      128 </span></span>
-<span id="cb13-45"><a href="#cb13-45" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-46"><a href="#cb13-46" tabindex="-1"></a><span class="co">#&gt; $`Regime 2`$message</span></span>
-<span id="cb13-47"><a href="#cb13-47" tabindex="-1"></a><span class="co">#&gt; [1] &quot;relative convergence (4)&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>fit_lagr_rs <span class="ot">&lt;-</span> <span class="fu">fit_lagr</span>(data_mcgf,</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>    <span class="at">model_ls =</span> <span class="fu">list</span>(<span class="st">&quot;lagr_tri&quot;</span>),</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>    <span class="at">par_init_ls =</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">lambda =</span> <span class="fl">0.1</span>, <span class="at">v1 =</span> <span class="dv">100</span>, <span class="at">v2 =</span> <span class="dv">100</span>, <span class="at">k =</span> <span class="dv">2</span>))</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>)</span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="fu">lapply</span>(fit_lagr_rs[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="cf">function</span>(x) x<span class="sc">$</span>fit)</span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="co">#&gt; $`Regime 1`</span></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a><span class="co">#&gt; $`Regime 1`$par</span></span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="co">#&gt;     lambda         v1         v2          k </span></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a><span class="co">#&gt;  0.1703142 74.4859663 65.8446145  1.3401565 </span></span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a><span class="co">#&gt; $`Regime 1`$objective</span></span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a><span class="co">#&gt; [1] 12.76542</span></span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a><span class="co">#&gt; $`Regime 1`$convergence</span></span>
+<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb16-16"><a href="#cb16-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-17"><a href="#cb16-17" tabindex="-1"></a><span class="co">#&gt; $`Regime 1`$iterations</span></span>
+<span id="cb16-18"><a href="#cb16-18" tabindex="-1"></a><span class="co">#&gt; [1] 31</span></span>
+<span id="cb16-19"><a href="#cb16-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-20"><a href="#cb16-20" tabindex="-1"></a><span class="co">#&gt; $`Regime 1`$evaluations</span></span>
+<span id="cb16-21"><a href="#cb16-21" tabindex="-1"></a><span class="co">#&gt; function gradient </span></span>
+<span id="cb16-22"><a href="#cb16-22" tabindex="-1"></a><span class="co">#&gt;       38      147 </span></span>
+<span id="cb16-23"><a href="#cb16-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-24"><a href="#cb16-24" tabindex="-1"></a><span class="co">#&gt; $`Regime 1`$message</span></span>
+<span id="cb16-25"><a href="#cb16-25" tabindex="-1"></a><span class="co">#&gt; [1] &quot;relative convergence (4)&quot;</span></span>
+<span id="cb16-26"><a href="#cb16-26" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-27"><a href="#cb16-27" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-28"><a href="#cb16-28" tabindex="-1"></a><span class="co">#&gt; $`Regime 2`</span></span>
+<span id="cb16-29"><a href="#cb16-29" tabindex="-1"></a><span class="co">#&gt; $`Regime 2`$par</span></span>
+<span id="cb16-30"><a href="#cb16-30" tabindex="-1"></a><span class="co">#&gt;     lambda         v1         v2          k </span></span>
+<span id="cb16-31"><a href="#cb16-31" tabindex="-1"></a><span class="co">#&gt;  0.2167212 43.9009789 78.2938281  1.7852123 </span></span>
+<span id="cb16-32"><a href="#cb16-32" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-33"><a href="#cb16-33" tabindex="-1"></a><span class="co">#&gt; $`Regime 2`$objective</span></span>
+<span id="cb16-34"><a href="#cb16-34" tabindex="-1"></a><span class="co">#&gt; [1] 15.68579</span></span>
+<span id="cb16-35"><a href="#cb16-35" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-36"><a href="#cb16-36" tabindex="-1"></a><span class="co">#&gt; $`Regime 2`$convergence</span></span>
+<span id="cb16-37"><a href="#cb16-37" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
+<span id="cb16-38"><a href="#cb16-38" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-39"><a href="#cb16-39" tabindex="-1"></a><span class="co">#&gt; $`Regime 2`$iterations</span></span>
+<span id="cb16-40"><a href="#cb16-40" tabindex="-1"></a><span class="co">#&gt; [1] 27</span></span>
+<span id="cb16-41"><a href="#cb16-41" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-42"><a href="#cb16-42" tabindex="-1"></a><span class="co">#&gt; $`Regime 2`$evaluations</span></span>
+<span id="cb16-43"><a href="#cb16-43" tabindex="-1"></a><span class="co">#&gt; function gradient </span></span>
+<span id="cb16-44"><a href="#cb16-44" tabindex="-1"></a><span class="co">#&gt;       35      128 </span></span>
+<span id="cb16-45"><a href="#cb16-45" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-46"><a href="#cb16-46" tabindex="-1"></a><span class="co">#&gt; $`Regime 2`$message</span></span>
+<span id="cb16-47"><a href="#cb16-47" tabindex="-1"></a><span class="co">#&gt; [1] &quot;relative convergence (4)&quot;</span></span></code></pre></div>
 <p>Finally we will store this model to <code>data_mcgf</code> using
 <code>add_lagr</code> and then print the final model:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>data_mcgf <span class="ot">&lt;-</span> <span class="fu">add_lagr</span>(data_mcgf, <span class="at">fit_lagr =</span> fit_lagr_rs)</span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="fu">model</span>(data_mcgf, <span class="at">old =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt;                  Model</span></span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co">#&gt; - Time lag: 5, 5 </span></span>
-<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">#&gt; - Scale of time lag: 1 </span></span>
-<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#&gt; - Forecast horizon: 1 </span></span>
-<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
-<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="co">#&gt;             Old - not in use</span></span>
-<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
-<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="co">#&gt; - Regime switching: FALSE</span></span>
-<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="co">#&gt; - Base model: sep </span></span>
-<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="co">#&gt; - Parameters:</span></span>
-<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="co">#&gt;          c      gamma     nugget          a      alpha </span></span>
-<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a><span class="co">#&gt; 0.00390725 0.50000000 0.00000000 0.71375884 0.34849745 </span></span>
-<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a><span class="co">#&gt; - Fixed parameters:</span></span>
-<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a><span class="co">#&gt; nugget </span></span>
-<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a><span class="co">#&gt;      0 </span></span>
-<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a><span class="co">#&gt; - Parameter estimation method: wls wls </span></span>
-<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a><span class="co">#&gt; - Optimization function: nlminb nlminb </span></span>
-<span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
-<span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a><span class="co">#&gt;                  Base</span></span>
-<span id="cb14-27"><a href="#cb14-27" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
-<span id="cb14-28"><a href="#cb14-28" tabindex="-1"></a><span class="co">#&gt; - Regime switching: FALSE</span></span>
-<span id="cb14-29"><a href="#cb14-29" tabindex="-1"></a><span class="co">#&gt; - Base model: sep </span></span>
-<span id="cb14-30"><a href="#cb14-30" tabindex="-1"></a><span class="co">#&gt; - Parameters:</span></span>
-<span id="cb14-31"><a href="#cb14-31" tabindex="-1"></a><span class="co">#&gt;          c      gamma          a      alpha     nugget </span></span>
-<span id="cb14-32"><a href="#cb14-32" tabindex="-1"></a><span class="co">#&gt; 0.00390725 0.50000000 0.72365072 0.39736171 0.00000000 </span></span>
-<span id="cb14-33"><a href="#cb14-33" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb14-34"><a href="#cb14-34" tabindex="-1"></a><span class="co">#&gt; - Fixed parameters:</span></span>
-<span id="cb14-35"><a href="#cb14-35" tabindex="-1"></a><span class="co">#&gt; nugget </span></span>
-<span id="cb14-36"><a href="#cb14-36" tabindex="-1"></a><span class="co">#&gt;      0 </span></span>
-<span id="cb14-37"><a href="#cb14-37" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb14-38"><a href="#cb14-38" tabindex="-1"></a><span class="co">#&gt; - Parameter estimation method: wls </span></span>
-<span id="cb14-39"><a href="#cb14-39" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb14-40"><a href="#cb14-40" tabindex="-1"></a><span class="co">#&gt; - Optimization function: nlminb </span></span>
-<span id="cb14-41"><a href="#cb14-41" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
-<span id="cb14-42"><a href="#cb14-42" tabindex="-1"></a><span class="co">#&gt;               Lagrangian</span></span>
-<span id="cb14-43"><a href="#cb14-43" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
-<span id="cb14-44"><a href="#cb14-44" tabindex="-1"></a><span class="co">#&gt; - Regime switching: TRUE </span></span>
-<span id="cb14-45"><a href="#cb14-45" tabindex="-1"></a><span class="co">#&gt; --------------------</span></span>
-<span id="cb14-46"><a href="#cb14-46" tabindex="-1"></a><span class="co">#&gt;       Regime 1 </span></span>
-<span id="cb14-47"><a href="#cb14-47" tabindex="-1"></a><span class="co">#&gt; --------------------</span></span>
-<span id="cb14-48"><a href="#cb14-48" tabindex="-1"></a><span class="co">#&gt; - Lagrangian model: lagr_tri </span></span>
-<span id="cb14-49"><a href="#cb14-49" tabindex="-1"></a><span class="co">#&gt; - Parameters:</span></span>
-<span id="cb14-50"><a href="#cb14-50" tabindex="-1"></a><span class="co">#&gt;     lambda         v1         v2          k </span></span>
-<span id="cb14-51"><a href="#cb14-51" tabindex="-1"></a><span class="co">#&gt;  0.1703142 74.4859663 65.8446145  1.3401565 </span></span>
-<span id="cb14-52"><a href="#cb14-52" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb14-53"><a href="#cb14-53" tabindex="-1"></a><span class="co">#&gt; - Fixed parameters:</span></span>
-<span id="cb14-54"><a href="#cb14-54" tabindex="-1"></a><span class="co">#&gt; NULL</span></span>
-<span id="cb14-55"><a href="#cb14-55" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb14-56"><a href="#cb14-56" tabindex="-1"></a><span class="co">#&gt; - Parameter estimation method: wls </span></span>
-<span id="cb14-57"><a href="#cb14-57" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb14-58"><a href="#cb14-58" tabindex="-1"></a><span class="co">#&gt; - Optimization function: nlminb </span></span>
-<span id="cb14-59"><a href="#cb14-59" tabindex="-1"></a><span class="co">#&gt; --------------------</span></span>
-<span id="cb14-60"><a href="#cb14-60" tabindex="-1"></a><span class="co">#&gt;       Regime 2 </span></span>
-<span id="cb14-61"><a href="#cb14-61" tabindex="-1"></a><span class="co">#&gt; --------------------</span></span>
-<span id="cb14-62"><a href="#cb14-62" tabindex="-1"></a><span class="co">#&gt; - Lagrangian model: lagr_tri </span></span>
-<span id="cb14-63"><a href="#cb14-63" tabindex="-1"></a><span class="co">#&gt; - Parameters:</span></span>
-<span id="cb14-64"><a href="#cb14-64" tabindex="-1"></a><span class="co">#&gt;     lambda         v1         v2          k </span></span>
-<span id="cb14-65"><a href="#cb14-65" tabindex="-1"></a><span class="co">#&gt;  0.2167212 43.9009789 78.2938281  1.7852123 </span></span>
-<span id="cb14-66"><a href="#cb14-66" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb14-67"><a href="#cb14-67" tabindex="-1"></a><span class="co">#&gt; - Fixed parameters:</span></span>
-<span id="cb14-68"><a href="#cb14-68" tabindex="-1"></a><span class="co">#&gt; NULL</span></span>
-<span id="cb14-69"><a href="#cb14-69" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb14-70"><a href="#cb14-70" tabindex="-1"></a><span class="co">#&gt; - Parameter estimation method: wls </span></span>
-<span id="cb14-71"><a href="#cb14-71" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb14-72"><a href="#cb14-72" tabindex="-1"></a><span class="co">#&gt; - Optimization function: nlminb</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>data_mcgf <span class="ot">&lt;-</span> <span class="fu">add_lagr</span>(data_mcgf, <span class="at">fit_lagr =</span> fit_lagr_rs)</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="fu">model</span>(data_mcgf, <span class="at">old =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a><span class="co">#&gt;                  Model</span></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a><span class="co">#&gt; - Time lag: 5, 5 </span></span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a><span class="co">#&gt; - Scale of time lag: 1 </span></span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a><span class="co">#&gt; - Forecast horizon: 1 </span></span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a><span class="co">#&gt;             Old - not in use</span></span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
+<span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a><span class="co">#&gt; - Regime switching: FALSE</span></span>
+<span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a><span class="co">#&gt; - Base model: sep </span></span>
+<span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a><span class="co">#&gt; - Parameters:</span></span>
+<span id="cb17-15"><a href="#cb17-15" tabindex="-1"></a><span class="co">#&gt;          c      gamma     nugget          a      alpha </span></span>
+<span id="cb17-16"><a href="#cb17-16" tabindex="-1"></a><span class="co">#&gt; 0.00390725 0.50000000 0.00000000 0.71375884 0.34849745 </span></span>
+<span id="cb17-17"><a href="#cb17-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-18"><a href="#cb17-18" tabindex="-1"></a><span class="co">#&gt; - Fixed parameters:</span></span>
+<span id="cb17-19"><a href="#cb17-19" tabindex="-1"></a><span class="co">#&gt; nugget </span></span>
+<span id="cb17-20"><a href="#cb17-20" tabindex="-1"></a><span class="co">#&gt;      0 </span></span>
+<span id="cb17-21"><a href="#cb17-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-22"><a href="#cb17-22" tabindex="-1"></a><span class="co">#&gt; - Parameter estimation method: wls wls </span></span>
+<span id="cb17-23"><a href="#cb17-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-24"><a href="#cb17-24" tabindex="-1"></a><span class="co">#&gt; - Optimization function: nlminb nlminb </span></span>
+<span id="cb17-25"><a href="#cb17-25" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
+<span id="cb17-26"><a href="#cb17-26" tabindex="-1"></a><span class="co">#&gt;                  Base</span></span>
+<span id="cb17-27"><a href="#cb17-27" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
+<span id="cb17-28"><a href="#cb17-28" tabindex="-1"></a><span class="co">#&gt; - Regime switching: FALSE</span></span>
+<span id="cb17-29"><a href="#cb17-29" tabindex="-1"></a><span class="co">#&gt; - Base model: sep </span></span>
+<span id="cb17-30"><a href="#cb17-30" tabindex="-1"></a><span class="co">#&gt; - Parameters:</span></span>
+<span id="cb17-31"><a href="#cb17-31" tabindex="-1"></a><span class="co">#&gt;          c      gamma          a      alpha     nugget </span></span>
+<span id="cb17-32"><a href="#cb17-32" tabindex="-1"></a><span class="co">#&gt; 0.00390725 0.50000000 0.72365072 0.39736171 0.00000000 </span></span>
+<span id="cb17-33"><a href="#cb17-33" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-34"><a href="#cb17-34" tabindex="-1"></a><span class="co">#&gt; - Fixed parameters:</span></span>
+<span id="cb17-35"><a href="#cb17-35" tabindex="-1"></a><span class="co">#&gt; nugget </span></span>
+<span id="cb17-36"><a href="#cb17-36" tabindex="-1"></a><span class="co">#&gt;      0 </span></span>
+<span id="cb17-37"><a href="#cb17-37" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-38"><a href="#cb17-38" tabindex="-1"></a><span class="co">#&gt; - Parameter estimation method: wls </span></span>
+<span id="cb17-39"><a href="#cb17-39" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-40"><a href="#cb17-40" tabindex="-1"></a><span class="co">#&gt; - Optimization function: nlminb </span></span>
+<span id="cb17-41"><a href="#cb17-41" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
+<span id="cb17-42"><a href="#cb17-42" tabindex="-1"></a><span class="co">#&gt;               Lagrangian</span></span>
+<span id="cb17-43"><a href="#cb17-43" tabindex="-1"></a><span class="co">#&gt; ----------------------------------------</span></span>
+<span id="cb17-44"><a href="#cb17-44" tabindex="-1"></a><span class="co">#&gt; - Regime switching: TRUE </span></span>
+<span id="cb17-45"><a href="#cb17-45" tabindex="-1"></a><span class="co">#&gt; --------------------</span></span>
+<span id="cb17-46"><a href="#cb17-46" tabindex="-1"></a><span class="co">#&gt;       Regime 1 </span></span>
+<span id="cb17-47"><a href="#cb17-47" tabindex="-1"></a><span class="co">#&gt; --------------------</span></span>
+<span id="cb17-48"><a href="#cb17-48" tabindex="-1"></a><span class="co">#&gt; - Lagrangian model: lagr_tri </span></span>
+<span id="cb17-49"><a href="#cb17-49" tabindex="-1"></a><span class="co">#&gt; - Parameters:</span></span>
+<span id="cb17-50"><a href="#cb17-50" tabindex="-1"></a><span class="co">#&gt;     lambda         v1         v2          k </span></span>
+<span id="cb17-51"><a href="#cb17-51" tabindex="-1"></a><span class="co">#&gt;  0.1703142 74.4859663 65.8446145  1.3401565 </span></span>
+<span id="cb17-52"><a href="#cb17-52" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-53"><a href="#cb17-53" tabindex="-1"></a><span class="co">#&gt; - Fixed parameters:</span></span>
+<span id="cb17-54"><a href="#cb17-54" tabindex="-1"></a><span class="co">#&gt; NULL</span></span>
+<span id="cb17-55"><a href="#cb17-55" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-56"><a href="#cb17-56" tabindex="-1"></a><span class="co">#&gt; - Parameter estimation method: wls </span></span>
+<span id="cb17-57"><a href="#cb17-57" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-58"><a href="#cb17-58" tabindex="-1"></a><span class="co">#&gt; - Optimization function: nlminb </span></span>
+<span id="cb17-59"><a href="#cb17-59" tabindex="-1"></a><span class="co">#&gt; --------------------</span></span>
+<span id="cb17-60"><a href="#cb17-60" tabindex="-1"></a><span class="co">#&gt;       Regime 2 </span></span>
+<span id="cb17-61"><a href="#cb17-61" tabindex="-1"></a><span class="co">#&gt; --------------------</span></span>
+<span id="cb17-62"><a href="#cb17-62" tabindex="-1"></a><span class="co">#&gt; - Lagrangian model: lagr_tri </span></span>
+<span id="cb17-63"><a href="#cb17-63" tabindex="-1"></a><span class="co">#&gt; - Parameters:</span></span>
+<span id="cb17-64"><a href="#cb17-64" tabindex="-1"></a><span class="co">#&gt;     lambda         v1         v2          k </span></span>
+<span id="cb17-65"><a href="#cb17-65" tabindex="-1"></a><span class="co">#&gt;  0.2167212 43.9009789 78.2938281  1.7852123 </span></span>
+<span id="cb17-66"><a href="#cb17-66" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-67"><a href="#cb17-67" tabindex="-1"></a><span class="co">#&gt; - Fixed parameters:</span></span>
+<span id="cb17-68"><a href="#cb17-68" tabindex="-1"></a><span class="co">#&gt; NULL</span></span>
+<span id="cb17-69"><a href="#cb17-69" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-70"><a href="#cb17-70" tabindex="-1"></a><span class="co">#&gt; - Parameter estimation method: wls </span></span>
+<span id="cb17-71"><a href="#cb17-71" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-72"><a href="#cb17-72" tabindex="-1"></a><span class="co">#&gt; - Optimization function: nlminb</span></span></code></pre></div>
 </div>
 </div>
 <div id="simple-kriging-for-new-locations" class="section level2">
@@ -867,72 +868,72 @@ regime-dependent prevailing winds:</p>
 new locations. The associated function is <code>krige_new</code>, and
 users can either supply the coordinates for the new locations or the
 distance matrices for all locations.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>krige_base_new <span class="ot">&lt;-</span> <span class="fu">krige_new</span>(</span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>    <span class="at">x =</span> data_mcgf,</span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>    <span class="at">locations_new =</span> locations_new,</span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>    <span class="at">model =</span> <span class="st">&quot;base&quot;</span>,</span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>    <span class="at">interval =</span> <span class="cn">TRUE</span></span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>)</span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>krige_stat_new <span class="ot">&lt;-</span> <span class="fu">krige_new</span>(</span>
-<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>    <span class="at">x =</span> data_mcgf,</span>
-<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>    <span class="at">locations_new =</span> locations_new,</span>
-<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a>    <span class="at">model =</span> <span class="st">&quot;all&quot;</span>,</span>
-<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a>    <span class="at">interval =</span> <span class="cn">TRUE</span></span>
-<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>krige_base_new <span class="ot">&lt;-</span> <span class="fu">krige_new</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>    <span class="at">x =</span> data_mcgf,</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>    <span class="at">locations_new =</span> locations_new,</span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>    <span class="at">model =</span> <span class="st">&quot;base&quot;</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>    <span class="at">interval =</span> <span class="cn">TRUE</span></span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a>)</span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a>krige_stat_new <span class="ot">&lt;-</span> <span class="fu">krige_new</span>(</span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a>    <span class="at">x =</span> data_mcgf,</span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a>    <span class="at">locations_new =</span> locations_new,</span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a>    <span class="at">model =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a>    <span class="at">interval =</span> <span class="cn">TRUE</span></span>
+<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a>)</span></code></pre></div>
 <p>Next, we can compute the root mean square error (RMSE), mean absolute
 error (MAE), and the realized percentage of observations falling outside
 the 95% PI (POPI) for these models for the new locations.</p>
 <div id="rmse" class="section level3">
 <h3>RMSE</h3>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="co"># RMSE</span></span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>rmse_base <span class="ot">&lt;-</span></span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>    <span class="fu">sqrt</span>(<span class="fu">colMeans</span>((data_new <span class="sc">-</span> krige_base_new<span class="sc">$</span>fit[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)])<span class="sc">^</span><span class="dv">2</span>, <span class="at">na.rm =</span> T))</span>
-<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>rmse_stat <span class="ot">&lt;-</span></span>
-<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>    <span class="fu">sqrt</span>(<span class="fu">colMeans</span>((data_new <span class="sc">-</span> krige_stat_new<span class="sc">$</span>fit[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)])<span class="sc">^</span><span class="dv">2</span>, <span class="at">na.rm =</span> T))</span>
-<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>rmse <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>    <span class="st">&quot;Base&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(rmse_base),</span>
-<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a>    <span class="st">&quot;STAT&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(rmse_stat)</span>
-<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a>)</span>
-<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a>rmse</span>
-<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a><span class="co">#&gt;      Base      STAT </span></span>
-<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a><span class="co">#&gt; 0.8117693 0.7621844</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="co"># RMSE</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>rmse_base <span class="ot">&lt;-</span></span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>    <span class="fu">sqrt</span>(<span class="fu">colMeans</span>((data_new <span class="sc">-</span> krige_base_new<span class="sc">$</span>fit[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)])<span class="sc">^</span><span class="dv">2</span>, <span class="at">na.rm =</span> T))</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>rmse_stat <span class="ot">&lt;-</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>    <span class="fu">sqrt</span>(<span class="fu">colMeans</span>((data_new <span class="sc">-</span> krige_stat_new<span class="sc">$</span>fit[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)])<span class="sc">^</span><span class="dv">2</span>, <span class="at">na.rm =</span> T))</span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>rmse <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a>    <span class="st">&quot;Base&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(rmse_base),</span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a>    <span class="st">&quot;STAT&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(rmse_stat)</span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a>)</span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a>rmse</span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a><span class="co">#&gt;      Base      STAT </span></span>
+<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a><span class="co">#&gt; 0.8117693 0.7621844</span></span></code></pre></div>
 </div>
 <div id="mae" class="section level3">
 <h3>MAE</h3>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>mae_base <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(<span class="fu">abs</span>(data_new <span class="sc">-</span> krige_base_new<span class="sc">$</span>fit[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)]), <span class="at">na.rm =</span> T)</span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>mae_stat <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(<span class="fu">abs</span>(data_new <span class="sc">-</span> krige_stat_new<span class="sc">$</span>fit[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)]), <span class="at">na.rm =</span> T)</span>
-<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>mae <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>    <span class="st">&quot;Base&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(mae_base),</span>
-<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>    <span class="st">&quot;STAT&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(mae_stat)</span>
-<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>)</span>
-<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a>mae</span>
-<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a><span class="co">#&gt;      Base      STAT </span></span>
-<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a><span class="co">#&gt; 0.6451738 0.6060982</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>mae_base <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(<span class="fu">abs</span>(data_new <span class="sc">-</span> krige_base_new<span class="sc">$</span>fit[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)]), <span class="at">na.rm =</span> T)</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>mae_stat <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(<span class="fu">abs</span>(data_new <span class="sc">-</span> krige_stat_new<span class="sc">$</span>fit[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)]), <span class="at">na.rm =</span> T)</span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>mae <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>    <span class="st">&quot;Base&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(mae_base),</span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a>    <span class="st">&quot;STAT&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(mae_stat)</span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a>)</span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a>mae</span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="co">#&gt;      Base      STAT </span></span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="co">#&gt; 0.6451738 0.6060982</span></span></code></pre></div>
 </div>
 <div id="popi" class="section level3">
 <h3>POPI</h3>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co"># POPI</span></span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>popi_base <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(</span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>    data_new <span class="sc">&lt;</span> krige_base_new<span class="sc">$</span>lower[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)] <span class="sc">|</span> data_new <span class="sc">&gt;</span> krige_base_new<span class="sc">$</span>upper[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)],</span>
-<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>    <span class="at">na.rm =</span> T</span>
-<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>)</span>
-<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a>popi_stat <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(</span>
-<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a>    data_new <span class="sc">&lt;</span> krige_stat_new<span class="sc">$</span>lower[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)] <span class="sc">|</span> data_new <span class="sc">&gt;</span> krige_stat_new<span class="sc">$</span>upper[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)],</span>
-<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a>    <span class="at">na.rm =</span> T</span>
-<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a>)</span>
-<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a>popi <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a>    <span class="st">&quot;Base&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(popi_base),</span>
-<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a>    <span class="st">&quot;STAT&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(popi_stat)</span>
-<span id="cb18-13"><a href="#cb18-13" tabindex="-1"></a>)</span>
-<span id="cb18-14"><a href="#cb18-14" tabindex="-1"></a>popi</span>
-<span id="cb18-15"><a href="#cb18-15" tabindex="-1"></a><span class="co">#&gt;       Base       STAT </span></span>
-<span id="cb18-16"><a href="#cb18-16" tabindex="-1"></a><span class="co">#&gt; 0.04560561 0.03811812</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="co"># POPI</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>popi_base <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(</span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>    data_new <span class="sc">&lt;</span> krige_base_new<span class="sc">$</span>lower[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)] <span class="sc">|</span> data_new <span class="sc">&gt;</span> krige_base_new<span class="sc">$</span>upper[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)],</span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>    <span class="at">na.rm =</span> T</span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a>)</span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>popi_stat <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(</span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a>    data_new <span class="sc">&lt;</span> krige_stat_new<span class="sc">$</span>lower[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)] <span class="sc">|</span> data_new <span class="sc">&gt;</span> krige_stat_new<span class="sc">$</span>upper[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)],</span>
+<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a>    <span class="at">na.rm =</span> T</span>
+<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a>)</span>
+<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a>popi <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb21-11"><a href="#cb21-11" tabindex="-1"></a>    <span class="st">&quot;Base&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(popi_base),</span>
+<span id="cb21-12"><a href="#cb21-12" tabindex="-1"></a>    <span class="st">&quot;STAT&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(popi_stat)</span>
+<span id="cb21-13"><a href="#cb21-13" tabindex="-1"></a>)</span>
+<span id="cb21-14"><a href="#cb21-14" tabindex="-1"></a>popi</span>
+<span id="cb21-15"><a href="#cb21-15" tabindex="-1"></a><span class="co">#&gt;       Base       STAT </span></span>
+<span id="cb21-16"><a href="#cb21-16" tabindex="-1"></a><span class="co">#&gt; 0.04560561 0.03811812</span></span></code></pre></div>
 </div>
 </div>
 </div>
 <div id="references" class="section level1">
 <h1>References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-Gneiting2002" class="csl-entry">
 Gneiting, Tilmann. 2002. <span>“Nonseparable, Stationary Covariance
 Functions for Space–Time Data.”</span> <em>Journal of the American
